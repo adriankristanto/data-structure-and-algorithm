@@ -9,13 +9,16 @@ class Solution:
 
         # use O(n) space and time
         # only goes through each number once (store it inside a hash table)
-        occurences: dict[int, int] = {}
-        for num in nums:
-            if num in occurences:
-                return True
-            occurences[num] = 1
-        # worst case: when no duplicates
-        return False
+        # occurences: dict[int, int] = {}
+        # for num in nums:
+        #    if num in occurences:
+        #       return True
+        #   occurences[num] = 1
+        # worst case: when no duplicates 
+        # return False
+        
+        # set data structure only stores unique values, so if the length of the input array is greater than the length of its set, then it contains duplicates
+        return len(nums) > len(set(nums))
 
 
 if __name__ == "__main__":
