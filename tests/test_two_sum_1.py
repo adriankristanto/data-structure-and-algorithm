@@ -21,3 +21,16 @@ def test_two_sum(nums, target, expected):
     result = solution.twoSum(nums, target)
     assert all_different(result), f"result contains duplicate(s): {result}"
     assert result == expected
+
+
+@pytest.mark.parametrize(
+    "nums, target",
+    [
+        ([], 10),
+        ([5], 10),
+        ([1, 2, 3], 10)
+    ]
+)
+def test_two_sum_no_solution(nums, target):
+    with pytest.raises(ValueError):
+        Solution.twoSum(nums, target)
