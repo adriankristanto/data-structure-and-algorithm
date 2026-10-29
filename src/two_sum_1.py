@@ -9,9 +9,9 @@ class Solution:
         
         record: dict[int, int] = {}
         for (i, num) in enumerate(nums):
-            result = target - num
-            if result in record:
-                return [record[result], i]
+            complement = target - num
+            if complement in record:
+                return [record[complement], i]
             # it's safe to overwrite the previous result, e.g., nums is [3,3,4,5] and target is 9 
             # we don't care whether 3 is the first one or the second one
             # also, [3,3,4] and target is 7 is not possible since there are two solutions here
