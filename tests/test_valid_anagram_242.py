@@ -1,6 +1,6 @@
 import pytest
 
-from valid_anagram_214 import Solution
+from valid_anagram_242 import Solution
 
 
 @pytest.mark.parametrize(
