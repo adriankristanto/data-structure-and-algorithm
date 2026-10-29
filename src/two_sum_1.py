@@ -16,4 +16,4 @@ class Solution:
             # we don't care whether 3 is the first one or the second one
             # also, [3,3,4] and target is 7 is not possible since there are two solutions here
             record[num] = i
-        return []
+        raise ValueError("No two numbers add up to the target.")
