@@ -21,6 +21,7 @@ class Solution:
         seen_frequency: dict[int, int] = {}
         for num in nums:
             seen_frequency[num] = seen_frequency.get(num, 0) + 1
+        # in the worst case, a single element can only appear a maximum of n times, so we can create a frequency array of size n
         n = len(nums)
         frequency: list[list[int]] = [[] for _ in range(n)]
         for value, freq in seen_frequency.items():
