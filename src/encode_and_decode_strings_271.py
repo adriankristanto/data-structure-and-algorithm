@@ -11,7 +11,7 @@ class Solution:
         pointer = 0
         while pointer < len(s):
             length = 0
-            while s[pointer + 1].isdigit():
+            while s[pointer].isdigit():
                 # we shouldn't do int(s[pointer]) * 10 since this will result in the last element being multiplied by 10, e.g., if the length should have been 3, it will end up with 30
                 length = length * 10 + int(s[pointer])
                 pointer += 1
