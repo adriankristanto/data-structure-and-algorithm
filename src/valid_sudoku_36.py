@@ -1,3 +1,6 @@
+import math
+
+
 class Solution:
     def containsDuplicate(self, lst: list[str]) -> bool:
         return len(lst) != len(set(lst))
@@ -19,16 +22,25 @@ class Solution:
             if self.containsDuplicate(self.cleanup(list(col))):
                 return False
 
-        inners = []
-        for i in range(0, 9, 3):
-            for j in range(0, 9, 3):
-                topLeftX, topLeftY = (i, j)
-                bottomRightX, bottomRightY = (i + 2, j + 2)
-                inner = []
-                for x in range(topLeftX, bottomRightX + 1):
-                    for y in range(topLeftY, bottomRightY + 1):
-                        inner.append(board[x][y])
-                inners.append(inner)
+        # flattening 2D index to 1D
+        # in sudoku, we have the following inner boxes
+        # 0 1 2
+        # 3 4 5
+        # 6 7 8
+        # an element at index i, j belong to one of these inner boxes
+        # e.g., element at index 7, 4 belong to the box at row 7 // 3 = 2, and column 4 // 3 = 1, so it belongs to the inner box number 7
+        # we can flatten the boxes into 0 1 2 | 3 4 5 | 6 7 8
+        # so, given row 2, we know that it belongs to one of the boxes in the last row (2 * 3) = a box in one of the indices 6 7 8. The column is 1, so (2 * 3) + 1 = 7 (so inner box number 7)
+        # the general formula is row * width + column
+        length = len(board)
+        side = int(math.sqrt(length))
+        inners = [[] for _ in range(length)]
+        for i in range(length):
+            for j in range(length):
+                innerBoxRow = i // side
+                innerBoxCol = j // side
+                boxIndex = innerBoxRow * side + innerBoxCol
+                inners[boxIndex].append(board[i][j])
 
         for inner in inners:
             if self.containsDuplicate(self.cleanup(inner)):
