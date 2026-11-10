@@ -2,26 +2,28 @@ class Solution:
     def longestConsecutive(self, nums: list[int]) -> int:
         if len(nums) == 0:
             return 0
-        if len(nums) == 1:
-            return 1
 
-        sortedNums = sorted(nums)
+        unique = set(nums)
+        longest = 0
+        for num in unique:
+            length = 1  # include the start of the current sequence
 
-        lengths = []
-        length = 0
-        for i in range(1, len(sortedNums)):
-            if abs(sortedNums[i] - sortedNums[i - 1]) == 1:
-                length += 1
-            elif abs(sortedNums[i] - sortedNums[i - 1]) == 0:
+            # if num - 1 exists, then ignore it since num is not the start of a sequence
+            if num - 1 in unique:
                 continue
-            else:
-                length += 1  # account for the last element
-                lengths.append(length)
-                length = 0
-        length += 1  # account for the last element
-        lengths.append(length)
 
-        return max(lengths)
+            # follow the sequence
+            nextNum = num + 1
+            # lookup a set costs O(1) -- similar to a hashmap
+            while nextNum in unique:
+                length += 1
+                nextNum += 1
+
+            # check the length
+            if longest < length:
+                longest = length
+
+        return longest
 
 
 if __name__ == "__main__":
