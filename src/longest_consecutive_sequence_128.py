@@ -3,6 +3,7 @@ class Solution:
         if len(nums) == 0:
             return 0
 
+        # to remove duplicates and fast lookup
         unique = set(nums)
         longest = 0
         for num in unique:
