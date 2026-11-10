@@ -21,8 +21,7 @@ class Solution:
                 nextNum += 1
 
             # check the length
-            if longest < length:
-                longest = length
+            longest = max(longest, length)
 
         return longest
 
