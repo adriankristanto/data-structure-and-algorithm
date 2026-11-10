@@ -7,26 +7,21 @@ class Solution:
 
         sortedNums = sorted(nums)
 
-        longest = 0
-        left = 0
-        right = 1
-        while right < len(sortedNums):
-            length = 0
-            while (
-                right < len(sortedNums)
-                and abs(sortedNums[left] - sortedNums[right]) <= 1
-            ):
-                if abs(sortedNums[left] - sortedNums[right]) == 1:
-                    length += 1
-                left += 1
-                right += 1
-            length += 1  # to account for the last element
-            if longest < length:
-                longest = length
-            # check for the next sequence (if any)
-            left = right
-            right += 1
-        return longest
+        lengths = []
+        length = 0
+        for i in range(1, len(sortedNums)):
+            if abs(sortedNums[i] - sortedNums[i - 1]) == 1:
+                length += 1
+            elif abs(sortedNums[i] - sortedNums[i - 1]) == 0:
+                continue
+            else:
+                length += 1  # account for the last element
+                lengths.append(length)
+                length = 0
+        length += 1  # account for the last element
+        lengths.append(length)
+
+        return max(lengths)
 
 
 if __name__ == "__main__":
