@@ -7,7 +7,7 @@ I used `conda` to manage the virtual environment. So, run the following to start
 ```
 conda env create -f environment.yml
 conda activate dsa
-python -m pip install -e .
+python -m pip install -e . --group test
 ```
 
 Then, run all tests with 
