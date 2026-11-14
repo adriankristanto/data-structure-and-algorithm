@@ -1,14 +1,16 @@
 class Solution:
     def dailyTemperatures(self, temperatures: list[int]) -> list[int]:
-        result = []
-        for i in range(len(temperatures) - 1):
-            waitTime = 0
-            for j in range(i + 1, len(temperatures)):
-                if temperatures[j] > temperatures[i]:
-                    waitTime = j - i
-                    break
-            result.append(waitTime)
-        result.append(0)  # it it not possible for the last one to wait for a warmer day
+        if (len(temperatures)) == 0:
+            return []
+
+        result = [0 for _ in range(len(temperatures))]
+        stack: list[int] = [0]
+        for i in range(1, len(temperatures)):
+            while len(stack) > 0 and temperatures[i] > temperatures[stack[-1]]:
+                previousIndex = stack.pop()
+                result[previousIndex] = i - previousIndex
+            stack.append(i)
+
         return result
 
 
