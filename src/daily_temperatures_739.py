@@ -1,5 +1,7 @@
 class Solution:
     def dailyTemperatures(self, temperatures: list[int]) -> list[int]:
+        # monotonic stack
+        # invariant: the values inside the stack must be in an non-increasing order
         result = [0 for _ in range(len(temperatures))]
         stack: list[int] = []
         for i in range(len(temperatures)):
