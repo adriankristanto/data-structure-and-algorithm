@@ -1,8 +1,5 @@
 class Solution:
     def dailyTemperatures(self, temperatures: list[int]) -> list[int]:
-        if (len(temperatures)) == 0:
-            return []
-
         result = [0 for _ in range(len(temperatures))]
         stack: list[int] = []
         for i in range(len(temperatures)):
