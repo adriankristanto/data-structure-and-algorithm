@@ -7,15 +7,9 @@ class Solution:
         for car in cars:
             position, speed = car
             arrivalTime = (target - position) / speed
-            if len(fleet) <= 0:
+            if len(fleet) <= 0 or fleet[-1] < arrivalTime:
                 fleet.append(arrivalTime)
                 continue
-            previousFleetArrivalTime = fleet.pop()
-            if previousFleetArrivalTime >= arrivalTime:
-                fleet.append(previousFleetArrivalTime)
-                continue
-            fleet.append(previousFleetArrivalTime)
-            fleet.append(arrivalTime)
         return len(fleet)
 
 
