@@ -20,3 +20,9 @@ def test_single_car(solution, target, position, speed, expected):
 def test_large_target(solution, target, position, speed, expected):
     result = solution.carFleet(target, position, speed)
     assert result == expected
+
+
+@pytest.mark.parametrize("target, position, speed, expected", [(10, [6, 8], [3, 2], 2)])
+def test_fractional_arrival_times(solution, target, position, speed, expected):
+    result = solution.carFleet(target, position, speed)
+    assert result == expected
