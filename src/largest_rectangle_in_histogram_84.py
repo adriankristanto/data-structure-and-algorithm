@@ -1,4 +1,9 @@
 class Solution:
+    # this is solved using prefix/suffix array combined with monotonic stack
+    # the stack must be monotonically increasing (strictly) -- since
+    # rectangle can still be formed if the previous bar has the same height as the current bar, so we pop even if the heights are equal
+    # the main idea is that, if the previous bar is taller, then we can use the previous' bar boundary (which is why I stored the previous bar's height and boundary in the stack -- the height is what causes the stack to be monotonically increasing, while the boundary is the prefix/suffix technique)
+    # if the previous bar is shorter, then we use the current bar as the current bar's own boundary
     def largestRectangleArea(self, heights: list[int]) -> int:
         leftBounds = [i for i in range(len(heights))]
         leftStack = []
