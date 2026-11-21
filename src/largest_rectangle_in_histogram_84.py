@@ -1,32 +1,29 @@
 class Solution:
-    # this is solved using prefix/suffix array combined with monotonic stack
-    # the stack must be monotonically increasing (strictly) -- since
-    # rectangle can still be formed if the previous bar has the same height as the current bar, so we pop even if the heights are equal
-    # the main idea is that, if the previous bar is taller, then we can use the previous' bar boundary (which is why I stored the previous bar's height and boundary in the stack -- the height is what causes the stack to be monotonically increasing, while the boundary is the prefix/suffix technique)
-    # if the previous bar is shorter, then we use the current bar as the current bar's own boundary
     def largestRectangleArea(self, heights: list[int]) -> int:
-        leftBounds = [i for i in range(len(heights))]
-        leftStack = []
-        for j in range(len(heights)):
-            while len(leftStack) > 0 and leftStack[-1][1] >= heights[j]:
-                idx, _ = leftStack.pop()
-                leftBounds[j] = idx
-            leftStack.append((leftBounds[j], heights[j]))
-
-        rightBounds = [i for i in range(len(heights))]
-        rightStack = []
-        for k in range(len(heights) - 1, -1, -1):
-            while len(rightStack) > 0 and rightStack[-1][1] >= heights[k]:
-                idx, _ = rightStack.pop()
-                rightBounds[k] = idx
-            rightStack.append((rightBounds[k], heights[k]))
-
+        # a monotonically non-decreasing stack
+        # we store the valid left bound for a given histogram
+        # i.e., how far left its rectangle can go
+        stack: list[tuple[int, int]] = []
         largest = 0
-        for l in range(len(heights)):
-            height = heights[l]
-            width = rightBounds[l] - leftBounds[l] + 1
+
+        for i, height in enumerate(heights):
+            left = i
+            while len(stack) > 0 and stack[-1][1] > height:
+                leftBound, h = stack.pop()
+                width = i - leftBound
+                area = h * width
+                largest = max(largest, area)
+                left = leftBound
+            stack.append((left, height))
+
+        # if the stack is not empty, we still have bars that haven't been handled yet
+        # we need to calculate its rectangle
+        for j in range(len(stack)):
+            leftBound, height = stack[j]
+            width = len(heights) - leftBound
             area = height * width
             largest = max(largest, area)
+
         return largest
 
 
@@ -54,8 +51,8 @@ class BruteForceSolution:
 
 if __name__ == "__main__":
     solution = Solution()
-    input = [7, 1, 7, 2, 2, 4]
-    result = solution.largestRectangleArea(input)
-    correct = BruteForceSolution().largestRectangleArea(input)
-    print(result)
-    print(correct)
+    arr = [7, 1, 7, 2, 2, 4]
+    result = solution.largestRectangleArea(arr)
+    correct = BruteForceSolution().largestRectangleArea(arr)
+    print("result:", result)
+    print("correct:", correct)
