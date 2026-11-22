@@ -1,7 +1,7 @@
 from collections.abc import Callable
 
 
-def zipWith[t, u, v](f: Callable[[t, u], v], xs: list[t], ys: list[u]):
+def zipWith[t, u, v](f: Callable[[t, u], v], xs: list[t], ys: list[u]) -> list[v]:
     return [f(x, y) for x, y in zip(xs, ys)]
 
 
