@@ -1,15 +1,14 @@
+from collections.abc import Callable
+
+
+def zipWith[t, u, v](f: Callable[[t, u], v], xs: list[t], ys: list[u]):
+    return [f(x, y) for x, y in zip(xs, ys)]
+
+
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         clean = [c for c in s.lower() if c.isalnum()]
-
-        left = 0
-        right = len(clean) - 1
-        result = True
-        while left < right:
-            result = result and clean[left] == clean[right]
-            left += 1
-            right -= 1
-        return result
+        return all(zipWith(lambda x, y: x == y, clean, list(reversed(clean))))
 
 
 if __name__ == "__main__":
