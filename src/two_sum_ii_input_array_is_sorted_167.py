@@ -7,11 +7,13 @@ class Solution:
             if total == target:
                 return [smallest + 1, largest + 1]
             # if target - largest is larger than smaller, we need to move smaller up
+            # if smallest + largest is less than target, trying out different number smaller than largest will not help, which is why we need to increase smallest, not move largest down
             if total < target:
                 smallest += 1
                 continue
-            
+
             # if target - largest is smaller than smallest, move largest down
+            # similarly, if smallest + largest is larger than target, trying out different number larger than smallest will not help, which is why we need to decrease largest, not move smallest up
             largest -= 1
         raise ValueError("No two numbers add up to the target.")
 
