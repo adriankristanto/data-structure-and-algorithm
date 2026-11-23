@@ -3,14 +3,15 @@ class Solution:
         smallest = 0
         largest = len(numbers) - 1
         while smallest < largest:
-            while smallest < largest and target - numbers[largest] < numbers[smallest]:
-                largest -= 1
-            while smallest < largest and target - numbers[largest] > numbers[smallest]:
-                smallest += 1
-            if numbers[smallest] + numbers[largest] == target:
-                # + 1 since the answer must be an index (starting from 1, not 0)
+            total = numbers[smallest] + numbers[largest]
+            if total == target:
                 return [smallest + 1, largest + 1]
-            # we don't increase the pointer to the smallest number as we might miss something
+            # if target - largest is larger than smaller, we need to move smaller up
+            if total < target:
+                smallest += 1
+                continue
+            
+            # if target - largest is smaller than smallest, move largest down
             largest -= 1
         raise ValueError("No two numbers add up to the target.")
 
