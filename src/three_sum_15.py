@@ -5,9 +5,7 @@ class Solution:
         # minus 2 since we only want to search to the right of target (index i) -- since the list is now sorted, if we use one target c and find all possible ways that sums up to c, then we no longer need to consider any prior targets -> so, only look to the right of the currently selected target
         i = 0
         while i < len(sortedNums) - 2:
-            # multiply by -1 since we are moving the target to the left
-            # i.e., smallest + largest + target = 0
-            # so, smallest + largets = -target
+
             currentNumber = sortedNums[i]
 
             # note the property of a sorted list
@@ -18,6 +16,9 @@ class Solution:
             if currentNumber > 0:
                 return result
 
+            # multiply by -1 since we are moving the target to the left
+            # i.e., smallest + largest + target = 0
+            # so, smallest + largets = -target
             target = -1 * currentNumber
             smallest = i + 1
             largest = len(sortedNums) - 1
@@ -30,24 +31,18 @@ class Solution:
                 if total == target:
                     # no longer need sorting since the input array is now sorted
                     result.append([currentNumber, currentSmallest, currentLargest])
-                    # we can move both because, given the same nums[i], using the same nums[smallest] or nums[largest] will always give back the same number as the other operand, e.g., a + b = c -- given the same c and a, b will always be the same, so skip the same b and a
+
+                # if total == target (see the two if statements below), we can move both because, given the same nums[i], using the same nums[smallest] or nums[largest] will always give back the same number as the other operand, e.g., a + b = c -- given the same c and a, b will always be the same, so skip the same b and a
+
+                if total <= target:
                     while (
                         smallest < largest and sortedNums[smallest] == currentSmallest
                     ):
                         smallest += 1
+
+                if total >= target:
                     while smallest < largest and sortedNums[largest] == currentLargest:
                         largest -= 1
-                    continue
-
-                if total < target:
-                    while (
-                        smallest < largest and sortedNums[smallest] == currentSmallest
-                    ):
-                        smallest += 1
-                    continue
-
-                while smallest < largest and sortedNums[largest] == currentLargest:
-                    largest -= 1
 
             while i < len(sortedNums) - 2 and sortedNums[i] == currentNumber:
                 i += 1
