@@ -4,9 +4,7 @@ class Solution:
         right = len(heights) - 1
         largest = 0
         while left < right:
-            leftHeight = heights[left]
-            rightHeight = heights[right]
-            limitingHeight = min(leftHeight, rightHeight)
+            limitingHeight = min(heights[left], heights[right])
             width = right - left
             largest = max(largest, limitingHeight * width)
             # the insight:
