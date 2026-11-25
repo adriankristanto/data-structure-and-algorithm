@@ -18,3 +18,22 @@ def test_brute_force_solution(heights, expected):
     bruteForceSolution = BruteForceSolution()
     result = bruteForceSolution.maxArea(heights)
     assert result == expected
+
+
+@pytest.mark.parametrize(
+    "heights",
+    [
+        ([1, 8, 6, 2, 5, 4, 8, 3, 7]),
+        ([1, 1]),
+        ([1, 2, 3, 4, 5, 6, 7]),
+        ([7, 6, 5, 4, 3, 2, 1]),
+        ([1, 7, 2, 5, 4, 7, 3, 6]),
+        ([2, 2, 2]),
+    ],
+)
+def test_optimised_solution(heights):
+    bruteForceSolution = BruteForceSolution()
+    solution = Solution()
+    correct = bruteForceSolution.maxArea(heights)
+    result = solution.maxArea(heights)
+    assert correct == result
