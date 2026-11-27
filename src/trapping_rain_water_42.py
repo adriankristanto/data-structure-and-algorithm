@@ -1,6 +1,18 @@
 class Solution:
     def trap(self, heights: list[int]) -> int:
-        return 0
+        # exclude the current bar from prefix/suffix
+        prefix: list[int] = [0] * len(heights)
+        for i in range(1, len(heights) - 1):
+            prefix[i] = max(prefix[i - 1], heights[i - 1])
+        suffix: list[int] = [0] * len(heights)
+        for j in range(len(heights) - 2, 0, -1):
+            suffix[j] = max(suffix[j + 1], heights[j + 1])
+        total = 0
+        for k in range(1, len(heights) - 1):
+            # if the current bar is the tallest, the result will be negative, so add max(0, ...)
+            area = max(0, min(prefix[k], suffix[k]) - heights[k])
+            total += area
+        return total
 
 
 class BruteForceSolution:
